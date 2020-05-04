@@ -28,3 +28,8 @@ dnf install -y docker-ce docker-ce-cli containerd.io
 grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0"
 systemctl enable docker
 systemctl start docker
+
+
+curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /bin/docker-compose
+chmod +x /bin/docker-compose
+
