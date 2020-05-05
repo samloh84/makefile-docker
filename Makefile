@@ -29,7 +29,7 @@ define _SET_DOCKER_IMAGE_NAMES_AND_TAGS_VARIABLES :=
 	if [[ ! -z "$(DOCKER_IMAGE_NAMES)" ]]; then \
 		DOCKER_IMAGE_NAMES=($(DOCKER_IMAGE_NAMES)); \
 	else \
-		DOCKER_IMAGE_NAMES=("$$(basename $(CURDIR) | sed 's/[^a-z0-9]\+/-/g')"); \
+		DOCKER_IMAGE_NAMES=("$$(basename $(CURDIR) | sed 's/[^a-z0-9_-]\+/-/g')"); \
 	fi; \
 	if [[ ! -z "$(DOCKER_IMAGE_TAGS)" ]]; then \
 		DOCKER_IMAGE_TAGS=($(DOCKER_IMAGE_TAGS)); \
@@ -52,7 +52,7 @@ define _SET_DOCKER_IMAGE_ARCHIVE_NAME_VARIABLE :=
 	if [[ ! -z "$(DOCKER_IMAGE_ARCHIVE_NAME)" ]]; then \
 		DOCKER_IMAGE_ARCHIVE_NAME="$(DOCKER_IMAGE_ARCHIVE_NAME)"; \
 	else \
-		DOCKER_IMAGE_ARCHIVE_NAME="$$(echo "$${DOCKER_FULL_IMAGE_NAME}" | sed 's/[^a-z0-9]\+/-/g').tar.xz"; \
+		DOCKER_IMAGE_ARCHIVE_NAME="$$(echo "$${DOCKER_FULL_IMAGE_NAME}" | sed 's/[^a-z0-9_-]\+/-/g').tar.xz"; \
 	fi
 endef
 
@@ -60,7 +60,7 @@ define _SET_DOCKER_CONTAINER_NAME_VARIABLE :=
 	if [[ ! -z "$(DOCKER_CONTAINER_NAME)" ]]; then \
 		DOCKER_CONTAINER_NAME="$(DOCKER_CONTAINER_NAME)"; \
 	else \
-		DOCKER_CONTAINER_NAME="$$(echo "$${DOCKER_IMAGE_NAMES[0]}" | sed 's/[^a-z0-9]\+/-/g')"; \
+		DOCKER_CONTAINER_NAME="$$(echo "$${DOCKER_IMAGE_NAMES[0]}" | sed 's%^\(.\+/\)*\(.\+\)$$%\2%' | sed 's/[^a-z0-9_-]\+/-/g')"; \
 	fi
 endef
 
